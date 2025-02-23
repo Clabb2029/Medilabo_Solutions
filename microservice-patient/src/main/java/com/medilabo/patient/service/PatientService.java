@@ -4,6 +4,8 @@ import com.medilabo.patient.exception.PatientNotFoundException;
 import com.medilabo.patient.model.Patient;
 import com.medilabo.patient.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,8 +14,8 @@ public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public Iterable<Patient> getAllPatients() {
-        return patientRepository.findAll();
+    public Page<Patient> getAllPatients(PageRequest pageRequest) {
+        return patientRepository.findAll(pageRequest);
     }
 
     public Patient getPatientById(Integer id) {

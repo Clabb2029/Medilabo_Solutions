@@ -4,8 +4,12 @@ import com.medilabo.patient.model.Patient;
 import com.medilabo.patient.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -18,21 +22,28 @@ import java.util.stream.Collectors;
 @RestController
 public class PatientController {
 
-    @Autowired
-    private PatientService patientService;
+    private final PatientService patientService;
+    private final PagedResourcesAssembler<Patient> pagedResourcesAssembler;
 
-    @GetMapping("/getPatients")
-    public ResponseEntity<Iterable<Patient>> getPatients() {
-        log.info("Request received to fetch patient list");
-        Iterable<Patient> patients = patientService.getAllPatients();
-        return ResponseEntity.ok(patients);
+    public PatientController(PatientService patientService, PagedResourcesAssembler<Patient> pagedResourcesAssembler) {
+        this.patientService = patientService;
+        this.pagedResourcesAssembler = pagedResourcesAssembler;
     }
 
-    @GetMapping("/getPatient/{id}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable("id") String id) {
+    @GetMapping(path="/patients")
+    public ResponseEntity<PagedModel<Patient>> getPatients(@RequestParam(defaultValue = "0") Integer page) {
+        log.info("Request received to fetch patient list");
+        Page<Patient> patients = patientService.getAllPatients(PageRequest.of(page, 4));
+        PagedModel<EntityModel<Patient>> entityModelPagedModel = pagedResourcesAssembler.toModel(patients);
+        PagedModel<Patient> patientPagedModel = PagedModel.of(entityModelPagedModel.getContent().stream().map(EntityModel::getContent).collect(Collectors.toList()), entityModelPagedModel.getMetadata());
+        return ResponseEntity.ok(patientPagedModel);
+    }
+
+    @GetMapping("/patient/{id}")
+    public ResponseEntity<Patient> getPatientById(@PathVariable("id") Integer id) {
         log.info("Request received to fetch patient with ID: {}", id);
         try {
-            Patient patient = patientService.getPatientById(Integer.valueOf(id));
+            Patient patient = patientService.getPatientById(id);
             log.debug("Patient found: {}", patient);
             return ResponseEntity.ok(patient);
         } catch (Exception e) {
@@ -61,7 +72,7 @@ public class PatientController {
         }
     }
 
-    @PutMapping("/updatePatient/{id}")
+    @PutMapping("/patient/{id}/update")
     public ResponseEntity<?> updatePatient(@PathVariable("id") String id, @Valid @RequestBody Patient patient, BindingResult bindingResult) {
         log.info("Request received to update patient with ID: {}", id);
         if (bindingResult.hasErrors()) {
@@ -81,7 +92,7 @@ public class PatientController {
         }
     }
 
-    @DeleteMapping("/deletePatient/{id}")
+    @DeleteMapping("/patient/{id}/delete")
     public ResponseEntity<Void> deletePatient(@PathVariable("id") String id) {
         log.info("Request received to delete patient with ID: {}", id);
         try {
