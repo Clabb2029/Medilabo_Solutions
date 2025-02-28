@@ -1,0 +1,13 @@
+<nav th:fragment="pagination" th:if="${patients.getContent.size() > 0}" th:with="patients=${patients}, currentPage=${currentPage}, linkTo=${linkTo}, page=${page}">
+    <ul class="pagination justify-content-center mx-auto">
+        <li class="page-item" th:classappend="${currentPage > 1} ? '' : 'disabled'">
+            <a class="page-link" th:href="@{/${linkTo}(page=${currentPage - 1})}">&laquo;</a>
+        </li>
+        <li class="page-item" th:classappend="${currentPage == page} ? 'active' : ''" th:each="page : ${#numbers.sequence(0, patients.getMetadata().getTotalPages() - 1)}">
+            <a class="page-link" th:text="${page + 1}" th:href="@{${linkTo}(page=${page})}"></a>
+        </li>
+        <li class="page-item" th:classappend="${currentPage + 1 == patients.getMetadata().getTotalPages()} ? 'disabled' : ''">
+            <a class="page-link" th:href="@{${linkTo}(page=${currentPage == 0} ? ${currentPage + 2} : ${currentPage + 1})}">&raquo;</a>
+        </li>
+    </ul>
+</nav>

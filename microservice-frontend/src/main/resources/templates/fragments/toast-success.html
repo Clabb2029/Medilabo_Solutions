@@ -1,0 +1,6 @@
+<div th:if="${message}" th:fragment="toast-success (message)" class="toast align-items-center text-bg-success fade show">
+  <div class="d-flex">
+    <div class="toast-body" th:text="${message}"></div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>

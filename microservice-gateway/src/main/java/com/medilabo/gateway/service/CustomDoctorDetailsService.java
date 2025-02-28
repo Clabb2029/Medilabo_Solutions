@@ -23,7 +23,7 @@ public class CustomDoctorDetailsService implements ReactiveUserDetailsService {
                                 .password(doctor.getPassword())
                                 .build()
                 )
-                .switchIfEmpty(Mono.error(new UsernameNotFoundException("Doctor not found")));
+                .switchIfEmpty(Mono.error(new UsernameNotFoundException("Docteur non trouvé")));
     }
 
 }

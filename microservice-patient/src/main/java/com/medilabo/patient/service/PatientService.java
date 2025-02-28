@@ -15,11 +15,11 @@ public class PatientService {
     private PatientRepository patientRepository;
 
     public Page<Patient> getAllPatients(PageRequest pageRequest) {
-        return patientRepository.findAll(pageRequest);
+        return patientRepository.findAllByOrderByLastnameAsc(pageRequest);
     }
 
     public Patient getPatientById(Integer id) {
-        return patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException("Patient with id " + id + " not found"));
+        return patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException("Patient avec l'ID " + id + " non trouvé"));
     }
 
     public Patient createPatient(Patient patient) {
@@ -37,7 +37,7 @@ public class PatientService {
             existingPatient.setPhoneNumber(patient.getPhoneNumber());
             return patientRepository.save(existingPatient);
         } else {
-            throw new PatientNotFoundException("Patient with id " + id + " not found");
+            throw new PatientNotFoundException("Patient avec l'ID " + id + " non trouvé");
         }
     }
 
@@ -46,7 +46,7 @@ public class PatientService {
         if(existingPatient != null) {
             patientRepository.deleteById(id);
         } else {
-            throw new PatientNotFoundException("Patient with id " + id + " not found");
+            throw new PatientNotFoundException("Patient avec l'ID " + id + " non trouvé");
         }
     }
 }

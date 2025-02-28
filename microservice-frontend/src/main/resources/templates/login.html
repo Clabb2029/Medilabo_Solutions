@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/head.html}"></head>
+    <body>
+        <div class="authentication-container">
+            <div class="login-container p-4">
+                <div class="login-title mb-4 text-center px-3 py-2">
+                    <i class="fas fa-medkit me-2"></i>
+                    MediTrack
+                </div>
+                <form th:action="@{/microservice-frontend/login}" action="#" class="form" method="post">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user fa-sm"></i></span>
+                        <input type="text" name="username" class="form-control" placeholder="Nom d'identifiant" required autofocus>
+                    </div>
+                    <div class="input-group mt-3">
+                        <span class="input-group-text"><i class="fas fa-star-of-life fa-xs"></i></span>
+                        <input type="password" name="password" class="form-control" placeholder="Mot de passe" required>
+                    </div>
+                    <small class="error" th:if="${param.error}">Identifiant ou mot de passe invalide</small>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary mt-4 px-4">Connexion</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+</html>

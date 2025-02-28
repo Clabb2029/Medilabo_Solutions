@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PatientRepository extends CrudRepository<Patient, Integer> {
 
-    Page<Patient> findAll(Pageable pageable);
+    Page<Patient> findAllByOrderByLastnameAsc(Pageable pageable);
 
 }

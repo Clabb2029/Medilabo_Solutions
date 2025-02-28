@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/head.html}"></head>
+    <body>
+        <div class="container p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 th:text="${patient.getId() != null} ? 'Modification de patient' : 'Créer un nouveau patient'"></h1>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt me-2"></i>Déconnexion</button>
+                </form>
+            </div>
+            <form th:action="@{${patient.getId() != null} ? '/microservice-frontend/patient/' + ${patient.getId()} + '/update' : '/microservice-frontend/create-patient'}" th:object="${patient}" method="post" class="form-horizontal">
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">Nom de famille</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="Nom de famille" th:field="*{lastname}">
+                    <small class="error" th:errors="*{lastname}" th:if="${#fields.hasErrors('lastname')}"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">Prénom</label>
+                    <input type="text" class="form-control" id="firstname" placeholder="Prénom" th:field="*{firstname}">
+                    <small class="error" th:errors="*{firstname}" th:if="${#fields.hasErrors('firstname')}"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="birthdate" class="form-label">Date de naissance</label>
+                    <input type="date" class="form-control" id="birthdate" th:field="*{birthdate}">
+                    <small class="error" th:errors="*{birthdate}" th:if="${#fields.hasErrors('birthdate')}"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Genre</label>
+                    <select class="form-select" id="gender" th:field="*{gender}">
+                        <option th:value="''" selected>Choisir le genre du patient</option>
+                        <option th:value="'F'" th:text="Femme"></option>
+                        <option th:value="'M'" th:text="Homme"></option>
+                    </select>
+                    <small class="error" th:errors="*{gender}" th:if="${#fields.hasErrors('gender')}"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Adresse postale</label>
+                    <input type="text" class="form-control" id="address" placeholder="Adresse postale" th:field="*{address}">
+                    <small class="error" th:errors="*{address}" th:if="${#fields.hasErrors('address')}"></small>
+                </div>
+                <div class="mb-5">
+                    <label for="phoneNumber" class="form-label">Numéro de téléphone</label>
+                    <input type="text" class="form-control" id="phoneNumber" placeholder="Numéro de téléphone" th:field="*{phoneNumber}">
+                    <small class="error" th:errors="*{phoneNumber}" th:if="${#fields.hasErrors('phoneNumber')}"></small>
+                </div>
+                <div class="text-center">
+                    <a class="btn btn-secondary me-2" href="/microservice-frontend/patient-list"><i class="fas fa-times me-2"></i>Annuler</a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-check me-2"></i>
+                        <span th:text="${patient.getId() != null} ? 'Modifier' : 'Valider'"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+</html>
