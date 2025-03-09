@@ -41,15 +41,6 @@
     white-space: nowrap;
 }
 
-.create-note-btn {
-    margin-top: calc(24px + 0.5rem);
-}
-
-.note-list {
-    height: 80vh;
-    overflow: auto;
-}
-
 .note-display{
     width: -webkit-fill-available;
     field-sizing: content;

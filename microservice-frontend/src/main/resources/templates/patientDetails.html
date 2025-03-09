@@ -9,8 +9,12 @@
                     <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt me-2"></i>Déconnexion</button>
                 </form>
             </div>
-            <div class="row">
-                <div class="col-5">
+            <div class="row d-flex justify-content-between">
+                <div class="col-4">
+                    <div class="text-center my-5">
+                        <a class="btn btn-secondary me-2" href="/microservice-frontend/patient-list"><i class="fas fa-times me-2"></i>Retour à la liste</a>
+                        <a class="btn btn-primary" th:href="@{|/microservice-frontend/patient/${patient.getId()}/edition|}"><i class="fas fa-edit me-2"></i>Modifier informations</a>
+                    </div>
                     <div class="mb-3">
                         <label for="lastname" class="form-label">Nom de famille</label>
                         <input type="text" class="form-control" id="lastname" th:value="${patient.getLastname()}" disabled>
@@ -35,14 +39,20 @@
                         <label for="phoneNumber" class="form-label">Numéro de téléphone</label>
                         <input type="text" class="form-control" id="phoneNumber" th:value="${patient.getPhoneNumber()}" disabled>
                     </div>
-                    <div class="text-center">
-                        <a class="btn btn-secondary me-2" href="/microservice-frontend/patient-list"><i class="fas fa-times me-2"></i>Retour à la liste</a>
-                        <a class="btn btn-primary" th:href="@{|/microservice-frontend/patient/${patient.getId()}/edition|}"><i class="fas fa-edit me-2"></i>Modifier informations</a>
+                    <div class="mb-5">
+                        <p>Rapport de diabète</p>
+                        <div class="note-display">
+                            <p>Résultat généré : <strong th:text="${report.getRiskLevel()}"></strong></p>
+                            <p th:text="${report.getRuleDescription()}"></p>
+                            <ul>
+                                <li th:each="trigger : ${report.getTriggers()}" th:text="${trigger}"></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-7 note-list">
-                    <div class="mb-3">
-                        <a class="btn btn-success d-block create-note-btn" th:href="@{|/microservice-frontend/patient/${patient.getId()}/create-note|}"><i class="fas fa-plus-circle me-2"></i>Créer une nouvelle note</a>
+                <div class="col-7">
+                    <div class="my-5">
+                        <a class="btn btn-success d-block" th:href="@{|/microservice-frontend/patient/${patient.getId()}/create-note|}"><i class="fas fa-plus-circle me-2"></i>Créer une nouvelle note</a>
                     </div>
                     <p th:if="${notes.size() == 0}" class="h5 text-center mt-5">Pas de note</p>
                     <div th:each="note, iterStat : ${notes}">

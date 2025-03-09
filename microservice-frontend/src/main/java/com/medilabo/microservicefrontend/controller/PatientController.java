@@ -2,6 +2,8 @@ package com.medilabo.microservicefrontend.controller;
 
 import com.medilabo.microservicefrontend.bean.NoteBean;
 import com.medilabo.microservicefrontend.bean.PatientBean;
+import com.medilabo.microservicefrontend.bean.ReportBean;
+import com.medilabo.microservicefrontend.proxy.MicroserviceDiabetesRiskProxy;
 import com.medilabo.microservicefrontend.proxy.MicroserviceNoteProxy;
 import com.medilabo.microservicefrontend.proxy.MicroservicePatientProxy;
 import jakarta.validation.Valid;
@@ -25,10 +27,12 @@ public class PatientController {
 
     private final MicroservicePatientProxy patientProxy;
     private final MicroserviceNoteProxy noteProxy;
+    private final MicroserviceDiabetesRiskProxy riskProxy;
 
-    public PatientController(MicroservicePatientProxy patientProxy, MicroserviceNoteProxy noteProxy) {
+    public PatientController(MicroservicePatientProxy patientProxy, MicroserviceNoteProxy noteProxy, MicroserviceDiabetesRiskProxy riskProxy) {
         this.patientProxy = patientProxy;
         this.noteProxy = noteProxy;
+        this.riskProxy = riskProxy;
     }
 
     @GetMapping("/login")
@@ -62,15 +66,18 @@ public class PatientController {
         try {
             PatientBean patient = patientProxy.getPatientById(id);
             List<NoteBean> notes = noteProxy.getPatientNotes(id);
+            ReportBean report = riskProxy.getPatientDiabetesReportById(id);
             log.debug("Patient récupéré avec succès");
             model.addAttribute("patient", patient);
             model.addAttribute("notes", notes);
+            model.addAttribute("report", report);
         }
         catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
             log.warn("Erreur lors de la récupération des informations du patient : {}", e.getMessage());
             model.addAttribute("patient", new PatientBean());
             model.addAttribute("notes", new ArrayList<>());
+            model.addAttribute("report", new ReportBean());
         }
         model.addAttribute("pageTitle", "Fiche patient");
         return "patientDetails";
