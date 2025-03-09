@@ -45,7 +45,7 @@
                     <small class="error" th:errors="*{phoneNumber}" th:if="${#fields.hasErrors('phoneNumber')}"></small>
                 </div>
                 <div class="text-center">
-                    <a class="btn btn-secondary me-2" href="/microservice-frontend/patient-list"><i class="fas fa-times me-2"></i>Annuler</a>
+                    <a class="btn btn-secondary me-2" th:href="@{|/microservice-frontend/patient/${patient.getId()}}"><i class="fas fa-times me-2"></i>Annuler</a>
                     <button type="submit" class="btn btn-success">
                         <i class="fas fa-check me-2"></i>
                         <span th:text="${patient.getId() != null} ? 'Modifier' : 'Valider'"></span>

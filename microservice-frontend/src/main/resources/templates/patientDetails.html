@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/head.html}"></head>
+    <body>
+        <div class="container p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1>Fiche patient</h1>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt me-2"></i>Déconnexion</button>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <div class="mb-3">
+                        <label for="lastname" class="form-label">Nom de famille</label>
+                        <input type="text" class="form-control" id="lastname" th:value="${patient.getLastname()}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="firstname" class="form-label">Prénom</label>
+                        <input type="text" class="form-control" id="firstname" th:value="${patient.getFirstname()}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="birthdate" class="form-label">Date de naissance</label>
+                        <input type="date" class="form-control" id="birthdate" th:value="${patient.getBirthdate()}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Genre</label>
+                        <input type="text" class="form-control" id="gender" th:value="${patient.getGender() == 'F'} ? 'Femme' : 'Homme'" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Adresse postale</label>
+                        <input type="text" class="form-control" id="address" th:value="${patient.getAddress()}" disabled>
+                    </div>
+                    <div class="mb-5">
+                        <label for="phoneNumber" class="form-label">Numéro de téléphone</label>
+                        <input type="text" class="form-control" id="phoneNumber" th:value="${patient.getPhoneNumber()}" disabled>
+                    </div>
+                    <div class="text-center">
+                        <a class="btn btn-secondary me-2" href="/microservice-frontend/patient-list"><i class="fas fa-times me-2"></i>Retour à la liste</a>
+                        <a class="btn btn-primary" th:href="@{|/microservice-frontend/patient/${patient.getId()}/edition|}"><i class="fas fa-edit me-2"></i>Modifier informations</a>
+                    </div>
+                </div>
+                <div class="col-7 note-list">
+                    <div class="mb-3">
+                        <a class="btn btn-success d-block create-note-btn" th:href="@{|/microservice-frontend/patient/${patient.getId()}/create-note|}"><i class="fas fa-plus-circle me-2"></i>Créer une nouvelle note</a>
+                    </div>
+                    <p th:if="${notes.size() == 0}" class="h5 text-center mt-5">Pas de note</p>
+                    <div th:each="note, iterStat : ${notes}">
+                        <div class="d-flex flex-row align-items-end">
+                            <div class="note-display me-2" th:utext="${note.getDescription()}"></div>
+                            <input class="form-control w-20 me-2" type="text" th:value="${#temporals.format(note.getDate(), 'dd/MM/yyyy')}" disabled>
+                            <a class="btn btn-primary text-nowrap" th:href="@{|/microservice-frontend/patient/${patient.getId()}/note/${note.getId()}/edition|}"><i class="fas fa-edit me-2"></i>Modifier</a>
+                        </div>
+                        <hr th:if="${!iterStat.last}">
+                    </div>
+                </div>
+            </div>
+            <th:block th:if="${param.toastMessage}">
+                <th:block th:with="toastMessage=${param.toastMessage[0]}">
+                    <div th:replace="~{fragments/toast-success :: toast-success (message = ${toastMessage})}"></div>
+                </th:block>
+            </th:block>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+</html>

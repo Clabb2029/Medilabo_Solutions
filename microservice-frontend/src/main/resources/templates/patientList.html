@@ -15,11 +15,7 @@
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Date de naissance</th>
-                        <th>Genre</th>
-                        <th>Adresse</th>
-                        <th>Numéro de téléphone</th>
-                        <th>Modifier patient</th>
-                        <th>Supprimer patient</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,14 +23,14 @@
                         <td th:text="${patient.getLastname()}"></td>
                         <td th:text="${patient.getFirstname()}"></td>
                         <td th:text="${#temporals.format(patient.getBirthdate(), 'dd/MM/yyyy')}"></td>
-                        <td th:text="${patient.getGender() == 'F'} ? 'Femme' : 'Homme'"></td>
-                        <td th:text="${patient.getAddress()}"></td>
-                        <td th:text="${patient.getPhoneNumber()}"></td>
-                        <td class="text-center"><a th:href="@{|/microservice-frontend/patient/${patient.getId()}}"><i class="fas fa-edit fa-lg edit-icon"></i></a></td>
-                        <td class="text-center"><a th:href="@{|/microservice-frontend/patient/${patient.getId()}/delete|}"><i class="fas fa-trash-alt fa-lg trash-icon"></i></a></td>
+                        <td class="btn-td">
+                            <a class="btn btn-success me-3" th:href="@{|/microservice-frontend/patient/${patient.getId()}}"><i class="fas fa-info-circle fa-lg me-2"></i>Consulter</a>
+                            <a class="btn btn-primary me-3" th:href="@{|/microservice-frontend/patient/${patient.getId()}/edition|}"><i class="fas fa-edit fa-lg me-2"></i>Modifier</a>
+                            <a class="btn btn-danger" th:href="@{|/microservice-frontend/patient/${patient.getId()}/delete|}"><i class="fas fa-trash-alt fa-lg me-2"></i>Supprimer</a>
+                        </td>
                     </tr>
                     <tr>
-                        <td colspan="8" class="text-center">
+                        <td colspan="4" class="text-center">
                             <a href="/microservice-frontend/create-patient">
                                 <button type="button" class="btn btn-secondary"><i class="fas fa-plus-circle me-2"></i>Créer un nouveau patient</button>
                             </a>
