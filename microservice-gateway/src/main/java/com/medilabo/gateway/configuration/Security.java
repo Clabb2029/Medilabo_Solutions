@@ -25,6 +25,17 @@ public class Security {
     public Security(CustomDoctorDetailsService customDoctorDetailsService) {
     }
 
+    /**
+     * Configures the security filter chain for the application, including CSRF handling, accessible pages without authentication,
+     * authentication error handling, and the configuration of the login and logout forms.
+     *
+     * @param http The {@link ServerHttpSecurity} object used to configure the application's security settings.
+     * @return A {@link SecurityWebFilterChain} object with the defined security rules.
+     *
+     * This method disables CSRF protection, allows access to certain pages (the stylesheet and login page) without authentication,
+     * requires authentication for all other requests, and sets up success and failure handlers for authentication in the form.
+     * It also configures a redirection to the login page after logout.
+     */
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
