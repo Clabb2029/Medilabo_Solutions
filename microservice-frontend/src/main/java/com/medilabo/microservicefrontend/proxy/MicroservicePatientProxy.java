@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "microservice-patient", url = "http://localhost:8081")
+@FeignClient(name = "microservice-patient", url = "${frontend.patient-url}")
 public interface MicroservicePatientProxy {
 
     @GetMapping(value = "/patients")

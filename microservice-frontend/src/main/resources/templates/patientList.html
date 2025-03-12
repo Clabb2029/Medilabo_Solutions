@@ -24,7 +24,7 @@
                         <td th:text="${patient.getFirstname()}"></td>
                         <td th:text="${#temporals.format(patient.getBirthdate(), 'dd/MM/yyyy')}"></td>
                         <td class="btn-td">
-                            <a class="btn btn-success me-3" th:href="@{|/microservice-frontend/patient/${patient.getId()}}"><i class="fas fa-info-circle fa-lg me-2"></i>Consulter</a>
+                            <a class="btn btn-success me-3" th:href="@{|/microservice-frontend/patient/${patient.getId()}|}"><i class="fas fa-info-circle fa-lg me-2"></i>Consulter</a>
                             <a class="btn btn-primary me-3" th:href="@{|/microservice-frontend/patient/${patient.getId()}/edition|}"><i class="fas fa-edit fa-lg me-2"></i>Modifier</a>
                             <a class="btn btn-danger" th:href="@{|/microservice-frontend/patient/${patient.getId()}/delete|}"><i class="fas fa-trash-alt fa-lg me-2"></i>Supprimer</a>
                         </td>

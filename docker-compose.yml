@@ -1,0 +1,109 @@
+version: "3.8"
+
+services:
+  eureka-server:
+    image: eureka-server
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+    restart: unless-stopped
+
+  gateway-service:
+    image: gateway-service
+    build: ./microservice-gateway
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    depends_on:
+      - eureka-server
+      - mysql-db
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_R2DBC_URL: r2dbc:mysql://mysql-db:3306/Medilabo_Solutions
+      SPRING_R2DBC_USERNAME: ${MYSQL_DB_USERNAME}
+      SPRING_R2DBC_PASSWORD: ${MYSQL_DB_PASSWORD}
+
+  patient-service:
+    image: patient-service
+    build: ./microservice-patient
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+    depends_on:
+      - eureka-server
+      - mysql-db
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_DB_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/Medilabo_Solutions
+
+  note-service:
+    image: note-service
+    build: ./microservice-note
+    ports:
+      - "8083:8083"
+    restart: unless-stopped
+    depends_on:
+      - eureka-server
+      - mongo-db
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATA_MONGODB_URI: mongodb://mongo-db:27017/MedilaboSolutions
+  
+  diabetes-risk-service:
+    image: diabetes-risk-service
+    build: ./microservice-diabetes-risk
+    ports:
+      - "8084:8084"
+    restart: unless-stopped
+    depends_on:
+      - eureka-server
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+  
+  frontend:
+    image: frontend
+    build: ./microservice-frontend
+    ports:
+      - "8082:8082"
+    restart: unless-stopped
+    depends_on:
+      - eureka-server
+      - gateway-service
+      - patient-service
+      - note-service
+      - diabetes-risk-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+  
+  mysql-db:
+    image: mysql:8
+    container_name: mysql-db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DB_PASSWORD}
+      MYSQL_DATABASE: Medilabo_Solutions
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init-databases/mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  
+  mongo-db:
+    image: mongo:latest
+    container_name: mongo-db
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_DATABASE: MedilaboSolutions
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+      - ./init-databases/mongodb-init.js:/docker-entrypoint-initdb.d/init.js:ro
+
+
+volumes:
+  mysql_data:
+  mongo_data:

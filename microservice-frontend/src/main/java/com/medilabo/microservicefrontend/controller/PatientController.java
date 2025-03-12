@@ -110,9 +110,9 @@ public class PatientController {
             log.warn("Erreur(s) dans le formulaire de création du patient : {}", errors);
             return "patientEdition";
         }
-        patientProxy.createPatient(patient);
+        PatientBean createdPatient = patientProxy.createPatient(patient);
         log.debug("Patient créé avec succès");
-        return "redirect:http://localhost:8080/microservice-frontend/patient/" + patient.getId() + "?toastMessage=" + URLEncoder.encode("Le patient a bien été créé", StandardCharsets.UTF_8);
+        return "redirect:http://localhost:8080/microservice-frontend/patient/" + createdPatient.getId() + "?toastMessage=" + URLEncoder.encode("Le patient a bien été créé", StandardCharsets.UTF_8);
     }
 
     @PostMapping("/patient/{id}/update")
