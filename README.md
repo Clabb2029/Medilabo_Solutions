@@ -51,6 +51,48 @@ Pour se connecter à l'application, utilisez les identifiants de l'utilisateur d
 
 Cet utilisateur est destiné uniquement aux tests.
 
+
+---
+
+## Captures de l'application
+
+Connexion :
+![1-Connexion](https://github.com/user-attachments/assets/7be9a38c-3cc2-4f2d-b351-a6262f6d7bd9)
+
+Liste des patients : 
+![2-Liste des patients](https://github.com/user-attachments/assets/7890bb03-6346-4a2f-9bb8-0f6615d90369)
+
+Liste des patients (vide) :
+![3-Liste des patients (vide)](https://github.com/user-attachments/assets/17dfabf1-77aa-485e-b45f-aaa5f3e029de)
+
+Formulaire de création d'un nouveau patient : 
+![4-Création de nouveau patient](https://github.com/user-attachments/assets/46f44cca-977f-4027-9fa3-82978a3cae1e)
+
+Formulaire de création d'un nouveau patient (erreurs) : 
+![5-Création de nouveau patient (erreurs form)](https://github.com/user-attachments/assets/22dc0a11-4559-45ee-ad6d-5ea1ceaff2f9)
+
+Détails du patient : 
+![6-Détails du patient](https://github.com/user-attachments/assets/eba8c91f-0d42-4f36-b898-1c2f3217d86e)
+
+Détails du patient (sans note) : 
+![7-Détails du patient (sans note)](https://github.com/user-attachments/assets/600eedde-b6cd-4a4b-866e-5d635cf3097b)
+
+Modification des informations du patient :
+![8-Modification de patient](https://github.com/user-attachments/assets/38480b4f-cb14-46c4-baeb-a1b6a8a9ee49)
+
+Formulaire de création d'une nouvelle note patient : 
+![9-Création de note patient](https://github.com/user-attachments/assets/6f3a4967-adca-4817-b005-373666ae0be9)
+
+Formulaire de création d'une nouvelle note patient (erreurs) : 
+![10-Création de note patient (erreurs form)](https://github.com/user-attachments/assets/98ca28fe-0797-4a33-b7e5-6421a56564c4)
+
+Modification d'une note patient : 
+![11-Modification de note patient](https://github.com/user-attachments/assets/8f40dcdf-ee5e-4652-a3b5-d13941501e4e)
+
+Page d'erreur :
+![12-Page d'erreur](https://github.com/user-attachments/assets/ce582bac-98ec-40b9-a8e6-deb6eaf2cda1)
+
+
 ---
 
 ## Medilabo_Solutions et le Green Code
